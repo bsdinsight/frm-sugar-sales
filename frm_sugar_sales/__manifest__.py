@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Agrione - Nông nghiệp cây mía',
-    'version': '19.0.2.4.0',
+    'version': '19.0.2.5.0',
     'summary': 'Nông nghiệp cây mía Agrione — module miễn phí lập kế hoạch giao mía '
                'nguyên liệu về nhà máy nhiều đợt trong vụ (nền Sale + Stock). Thuộc hệ '
                'sinh thái ERP mía: mua hàng, kho (vật tư nông nghiệp / vật liệu sản xuất '
@@ -36,7 +36,14 @@ Kèm hệ sinh thái vận hành: Mua hàng · Kho (vật tư nông nghiệp / v
     'license': 'LGPL-3',
     'website': 'https://agrione.vn',
     'maintainer': 'BSD',
-    'images': ['static/description/cover.png'],
+    'images': [
+        'static/description/cover.png',
+        'static/description/screenshot_1_map.png',
+        'static/description/screenshot_3_cultivation.png',
+        'static/description/screenshot_2_plots.png',
+        'static/description/screenshot_4_harvest.png',
+        'static/description/screenshot_5_investment.png',
+    ],
     'depends': ['sale_management', 'stock'],
     'data': [
         'security/ir.model.access.csv',
