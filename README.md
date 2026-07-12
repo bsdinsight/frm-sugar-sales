@@ -1,19 +1,23 @@
-# Agrione – Bán hàng & Kế hoạch giao hàng nhiều đợt (`frm_sugar_sales`)
+# Agrione - Nông nghiệp cây mía (`frm_sugar_sales`)
 
-Module Odoo **19.0** cho bài toán bán **đơn hàng lớn nhưng giao làm nhiều đợt** —
-điển hình ngành đường, nông sản, vật liệu, phân bón (bán 1.000 tấn, giao rải nhiều
-chuyến trong nhiều tuần).
+Giải pháp **nông nghiệp cây mía** của Agrione trên nền **Odoo 19.0**. Module **miễn phí**
+này là phần **kế hoạch giao mía nguyên liệu về nhà máy nhiều đợt** trong vụ — một mắt xích
+của hệ sinh thái ERP cây mía Agrione.
 
 [![License: LGPL-3](https://img.shields.io/badge/license-LGPL--3-blue.svg)](LICENSE)
 ![Odoo 19.0](https://img.shields.io/badge/Odoo-19.0-714B67.svg)
 
-## Tính năng
+## Hệ sinh thái ERP cây mía Agrione
 
-- **Kế hoạch giao theo đợt** — thêm các đợt giao (sản phẩm · số lượng · ngày hẹn) ngay trong một tab của đơn bán hàng.
-- **Sinh phiếu giao thật** — *Tạo phiếu giao* → phiếu xuất kho đúng số lượng & ngày; hoặc *Tạo tất cả* một lần.
-- **Theo dõi tiến độ** — đã giao / còn lại / % hoàn tất, cập nhật theo phiếu kho thực tế.
-- **Trạng thái từng đợt** — Chờ tạo phiếu → Đã tạo phiếu → Giao một phần → Đã giao đủ.
-- **Mẫu in** — Hợp đồng bán hàng & Phiếu giao hàng (tiếng Việt).
+Mua hàng · Kho (vật tư nông nghiệp / vật liệu sản xuất / thành phẩm) · Bán hàng ·
+Nhân sự · Kế toán · Canh tác & thu hoạch. Bộ giải pháp đầy đủ triển khai theo yêu cầu —
+liên hệ [agrione.vn](https://agrione.vn).
+
+## Module miễn phí này gồm
+
+- **Kế hoạch giao theo đợt** — mỗi đơn thêm nhiều đợt giao (sản phẩm · số lượng · ngày); vụ mía giao làm nhiều chuyến trong nhiều tuần.
+- **Sinh phiếu kho tự động** — mỗi đợt tạo phiếu xuất kho thật, đúng số lượng & ngày.
+- **Theo dõi tiến độ** — đã giao / còn lại / % hoàn tất theo phiếu kho thực tế.
 
 ## Cài đặt
 
@@ -21,7 +25,7 @@ chuyến trong nhiều tuần).
 odoo -i frm_sugar_sales -d <database>
 ```
 
-**Module độc lập** — chỉ phụ thuộc `sale_management` + `stock` (chuẩn Odoo), không cần module ngoài nào.
+Chỉ phụ thuộc `sale_management` + `stock` (chuẩn Odoo) — cài độc lập, dùng ngay.
 
 ## Kỹ thuật
 
@@ -38,4 +42,4 @@ LGPL-3 — xem [LICENSE](LICENSE).
 
 ---
 
-Phát triển bởi **Agrione (BSD)** · [agrione.vn](https://agrione.vn) · [bsdinsight.com](https://bsdinsight.com)
+Phát triển bởi **BSD** · [agrione.vn](https://agrione.vn) · [bsdinsight.com](https://bsdinsight.com)

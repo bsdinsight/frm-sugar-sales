@@ -1,32 +1,40 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Agrione – Bán hàng & Kế hoạch giao hàng',
-    'version': '19.0.2.0.0',
-    'summary': 'Đơn hàng lớn giao nhiều đợt: mỗi đơn có kế hoạch giao (ngày + số '
-               'lượng từng đợt), mỗi đợt sinh phiếu giao thật + theo dõi đã giao / '
-               'còn lại. Module ĐỘC LẬP — chỉ cần Sale + Stock.',
+    'name': 'Agrione - Nông nghiệp cây mía',
+    'version': '19.0.2.1.0',
+    'summary': 'Nông nghiệp cây mía Agrione — module miễn phí lập kế hoạch giao mía '
+               'nguyên liệu về nhà máy nhiều đợt trong vụ (nền Sale + Stock). Thuộc hệ '
+               'sinh thái ERP mía: mua hàng, kho (vật tư nông nghiệp / vật liệu sản xuất '
+               '/ thành phẩm), bán hàng, nhân sự, kế toán.',
     'description': """
-Agrione – Bán hàng & Kế hoạch giao hàng
-=======================================
-Module **độc lập** (chỉ phụ thuộc Sale + Stock của Odoo) cho bài toán bán hàng
-đơn lớn nhưng **giao nhiều đợt** — điển hình ngành đường (bán 1.000 tấn nhưng
-giao làm nhiều chuyến trong nhiều tuần).
+Agrione - Nông nghiệp cây mía
+=============================
+Giải pháp **nông nghiệp cây mía** của Agrione trên nền Odoo. Module miễn phí này là
+phần **kế hoạch giao mía nguyên liệu về nhà máy nhiều đợt** trong vụ thu hoạch —
+một mắt xích của hệ sinh thái ERP mía Agrione.
 
-* **Kế hoạch giao hàng trên từng đơn** — thêm các đợt giao (sản phẩm · số lượng
-  · ngày hẹn) ngay trong tab của đơn bán hàng.
-* **Sinh phiếu giao thật cho từng đợt** — bấm *Tạo phiếu giao* → phiếu xuất kho
-  → khách, đúng số lượng & ngày; hoặc *Tạo tất cả phiếu giao* một lần.
-* **Theo dõi tiến độ** — đã giao / còn lại / % hoàn tất, cập nhật theo phiếu kho
-  thực tế; mỗi đợt có trạng thái Chờ tạo phiếu / Đã tạo phiếu / Giao một phần /
-  Đã giao đủ.
+Hệ sinh thái ERP mía Agrione
+----------------------------
+* **Mua hàng** — vật tư nông nghiệp (giống, phân, thuốc) và nguyên vật liệu sản xuất.
+* **Kho** — vật tư nông nghiệp · vật liệu sản xuất · thành phẩm (đường).
+* **Bán hàng** — giao mía nguyên liệu / thành phẩm nhiều đợt theo vụ.
+* **Nhân sự** — chấm công, khoán việc nông trường.
+* **Kế toán** — hạch toán mùa vụ, giá thành.
 
-Không phụ thuộc module nào khác của Agrione — dùng chung nền Odoo Community.
+Module miễn phí này gồm
+-----------------------
+* **Kế hoạch giao theo đợt** — thêm các đợt giao (sản phẩm · số lượng · ngày) ngay
+  trên đơn; điển hình vụ mía: giao mía về nhà máy làm nhiều chuyến trong nhiều tuần.
+* **Sinh phiếu giao thật cho từng đợt** — tạo phiếu xuất kho đúng số lượng & ngày.
+* **Theo dõi tiến độ** — đã giao / còn lại / % hoàn tất theo phiếu kho thực tế.
+
+Chỉ phụ thuộc Sale + Stock của Odoo — cài độc lập, dùng ngay.
 """,
     'category': 'Sales',
-    'author': 'Agrione (BSD)',
+    'author': 'BSD',
     'license': 'LGPL-3',
     'website': 'https://agrione.vn',
-    'maintainer': 'Agrione (BSD)',
+    'maintainer': 'BSD',
     'images': ['static/description/cover.png'],
     'depends': ['sale_management', 'stock'],
     'data': [
