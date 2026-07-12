@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Mục "Kế hoạch giao hàng" trong app Bán hàng (đơn hàng dùng menu Orders sẵn có) -->
+  <menuitem id="menu_sugar_delivery_schedule"
+            name="Kế hoạch giao hàng"
+            parent="sale.sale_menu_root"
+            action="action_delivery_schedule"
+            sequence="5"/>
+
+</odoo>

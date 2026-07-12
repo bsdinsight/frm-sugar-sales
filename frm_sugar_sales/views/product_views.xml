@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Ô đánh dấu Thành phẩm bán ra trên form sản phẩm -->
+  <record id="product_template_form_finished_good" model="ir.ui.view">
+    <field name="name">product.template.form.finished.good</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_form_view"/>
+    <field name="arch" type="xml">
+      <field name="sale_ok" position="after">
+        <field name="is_finished_good"/>
+      </field>
+    </field>
+  </record>
+
+  <!-- app Bán hàng · menu Sản phẩm: CHỈ hiện thành phẩm bán ra -->
+  <record id="sale.product_template_action" model="ir.actions.act_window">
+    <field name="name">Thành phẩm bán ra</field>
+    <field name="domain">[('is_finished_good', '=', True)]</field>
+    <field name="context">{'default_is_finished_good': True, 'default_sale_ok': True}</field>
+  </record>
+
+</odoo>

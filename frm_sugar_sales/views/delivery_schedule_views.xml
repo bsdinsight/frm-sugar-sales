@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Danh sách tất cả đợt giao (tổng quan theo lịch) -->
+  <record id="view_delivery_schedule_list" model="ir.ui.view">
+    <field name="name">frm.sale.delivery.schedule.list</field>
+    <field name="model">frm.sale.delivery.schedule</field>
+    <field name="arch" type="xml">
+      <list decoration-success="delivery_state == 'done'"
+            decoration-warning="delivery_state == 'partial'"
+            decoration-muted="delivery_state == 'pending'"
+            create="false">
+        <field name="planned_date"/>
+        <field name="order_id"/>
+        <field name="partner_id"/>
+        <field name="product_id"/>
+        <field name="planned_qty" sum="Tổng kế hoạch"/>
+        <field name="product_uom_id" optional="show"/>
+        <field name="qty_delivered" sum="Tổng đã giao"/>
+        <field name="delivery_state" widget="badge"
+               decoration-success="delivery_state == 'done'"
+               decoration-warning="delivery_state == 'partial'"
+               decoration-info="delivery_state == 'scheduled'"/>
+        <field name="picking_id" optional="show"/>
+        <field name="picking_state" optional="hide"/>
+        <button name="action_generate_delivery" type="object" string="Tạo phiếu giao"
+                icon="fa-truck" invisible="picking_id" class="btn-link"/>
+        <button name="action_open_picking" type="object" string="Mở phiếu"
+                icon="fa-external-link" invisible="not picking_id" class="btn-link"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_delivery_schedule_search" model="ir.ui.view">
+    <field name="name">frm.sale.delivery.schedule.search</field>
+    <field name="model">frm.sale.delivery.schedule</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="order_id"/>
+        <field name="partner_id"/>
+        <field name="product_id"/>
+        <filter name="pending" string="Chờ tạo phiếu" domain="[('delivery_state','=','pending')]"/>
+        <filter name="scheduled" string="Đã tạo phiếu" domain="[('delivery_state','=','scheduled')]"/>
+        <filter name="done" string="Đã giao đủ" domain="[('delivery_state','=','done')]"/>
+        <separator/>
+        <filter name="g_order" string="Đơn hàng" context="{'group_by':'order_id'}"/>
+        <filter name="g_partner" string="Khách hàng" context="{'group_by':'partner_id'}"/>
+        <filter name="g_state" string="Tình trạng" context="{'group_by':'delivery_state'}"/>
+        <filter name="g_month" string="Tháng giao" context="{'group_by':'planned_date:month'}"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="action_delivery_schedule" model="ir.actions.act_window">
+    <field name="name">Kế hoạch giao hàng</field>
+    <field name="res_model">frm.sale.delivery.schedule</field>
+    <field name="view_mode">list</field>
+    <field name="search_view_id" ref="view_delivery_schedule_search"/>
+    <field name="context">{'search_default_g_order': 1}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">Chưa có đợt giao nào</p>
+      <p>Mở một đơn bán hàng → tab <b>Kế hoạch giao hàng</b> để thêm các đợt giao
+         (ngày + số lượng), rồi tạo phiếu giao cho từng đợt.</p>
+    </field>
+  </record>
+
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+
+    <record id="demo_sugar_customer" model="res.partner">
+      <field name="name">Công ty TM Đường Miền Trung</field>
+      <field name="is_company" eval="True"/>
+      <field name="customer_rank" eval="1"/>
+      <field name="city">Vinh</field>
+      <field name="phone">0238 123 4567</field>
+    </record>
+
+    <record id="demo_sugar_product_rs" model="product.product">
+      <field name="name">Đường RS (tấn)</field>
+      <field name="type">consu</field>
+      <field name="is_storable" eval="True"/>
+      <field name="is_finished_good" eval="True"/>
+      <field name="list_price">17000000</field>
+      <field name="sale_ok" eval="True"/>
+      <field name="uom_id" ref="uom.product_uom_unit"/>
+      <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    </record>
+
+    <record id="demo_sugar_so" model="sale.order">
+      <field name="partner_id" ref="demo_sugar_customer"/>
+      <field name="client_order_ref">HĐ đường 2026 — 1.000 tấn</field>
+      <field name="order_line" eval="[(0, 0, {
+        'product_id': ref('demo_sugar_product_rs'),
+        'name': 'Đường RS — hợp đồng 1.000 tấn',
+        'product_uom_qty': 1000,
+        'product_uom_id': ref('uom.product_uom_unit'),
+        'price_unit': 17000000,
+      })]"/>
+      <field name="delivery_schedule_line_ids" eval="[
+        (0, 0, {'product_id': ref('demo_sugar_product_rs'), 'product_uom_id': ref('uom.product_uom_unit'), 'planned_qty': 300, 'planned_date': (datetime.date.today() + relativedelta(days=10)).strftime('%Y-%m-%d'), 'note': 'Đợt 1'}),
+        (0, 0, {'product_id': ref('demo_sugar_product_rs'), 'product_uom_id': ref('uom.product_uom_unit'), 'planned_qty': 300, 'planned_date': (datetime.date.today() + relativedelta(days=25)).strftime('%Y-%m-%d'), 'note': 'Đợt 2'}),
+        (0, 0, {'product_id': ref('demo_sugar_product_rs'), 'product_uom_id': ref('uom.product_uom_unit'), 'planned_qty': 200, 'planned_date': (datetime.date.today() + relativedelta(days=40)).strftime('%Y-%m-%d'), 'note': 'Đợt 3'}),
+        (0, 0, {'product_id': ref('demo_sugar_product_rs'), 'product_uom_id': ref('uom.product_uom_unit'), 'planned_qty': 200, 'planned_date': (datetime.date.today() + relativedelta(days=55)).strftime('%Y-%m-%d'), 'note': 'Đợt 4'}),
+      ]"/>
+    </record>
+
+  </data>
+</odoo>

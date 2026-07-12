@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="action_report_delivery_note" model="ir.actions.report">
+    <field name="name">Phiếu giao hàng</field>
+    <field name="model">frm.sale.delivery.schedule</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">frm_sugar_sales.report_delivery_note</field>
+    <field name="report_file">frm_sugar_sales.report_delivery_note</field>
+    <field name="binding_model_id" ref="model_frm_sale_delivery_schedule"/>
+    <field name="binding_type">report</field>
+  </record>
+
+  <template id="report_delivery_note">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="web.external_layout">
+          <div class="page" style="font-size:12px;">
+
+            <div class="text-center">
+              <h3 style="margin:6px 0;font-weight:bold;">PHIẾU GIAO HÀNG</h3>
+              <p style="margin:0;">
+                Thuộc đơn/hợp đồng: <b><span t-field="o.order_id.name"/></b>
+                <t t-if="o.picking_id"> · Phiếu kho: <span t-field="o.picking_id.name"/></t>
+              </p>
+              <p style="margin:0;">Ngày giao dự kiến:
+                <b><span t-out="o.planned_date and o.planned_date.strftime('%d/%m/%Y')"/></b>
+                <t t-if="o.note"> · <span t-field="o.note"/></t>
+              </p>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-6">
+                <p style="margin:0;"><b>BÊN GIAO:</b> <span t-out="o.company_id.name"/></p>
+                <p style="margin:0;">
+                  <t t-if="o.company_id.street"><span t-out="o.company_id.street"/><t t-if="o.company_id.city">, <span t-out="o.company_id.city"/></t><br/></t>
+                  <t t-if="o.company_id.phone">ĐT: <span t-out="o.company_id.phone"/></t>
+                </p>
+              </div>
+              <div class="col-6">
+                <p style="margin:0;"><b>BÊN NHẬN:</b> <span t-field="o.partner_id.name"/></p>
+                <p style="margin:0;">
+                  <t t-if="o.partner_id.street"><span t-out="o.partner_id.street"/><t t-if="o.partner_id.city">, <span t-out="o.partner_id.city"/></t><br/></t>
+                  <t t-if="o.partner_id.phone">ĐT: <span t-out="o.partner_id.phone"/></t>
+                </p>
+              </div>
+            </div>
+
+            <table class="table table-sm table-bordered mt-3" style="font-size:12px;">
+              <thead>
+                <tr>
+                  <th class="text-center">STT</th><th>Hàng hóa</th>
+                  <th class="text-end">Số lượng giao</th><th class="text-center">ĐVT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-center">1</td>
+                  <td><span t-field="o.product_id"/></td>
+                  <td class="text-end"><b><span t-out="'{:,.0f}'.format(o.planned_qty).replace(',','.')"/></b></td>
+                  <td class="text-center"><span t-field="o.product_uom_id"/></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p style="margin-top:6px;font-style:italic;">Số lượng thực giao ghi theo phiếu cân/kiểm đếm tại thời điểm giao; hai bên ký xác nhận bên dưới.</p>
+
+            <div class="row" style="margin-top:40px;">
+              <div class="col-4 text-center"><b>NGƯỜI GIAO HÀNG</b><br/><i>(Ký, ghi rõ họ tên)</i></div>
+              <div class="col-4 text-center"><b>THỦ KHO</b><br/><i>(Ký, ghi rõ họ tên)</i></div>
+              <div class="col-4 text-center"><b>NGƯỜI NHẬN HÀNG</b><br/><i>(Ký, ghi rõ họ tên)</i></div>
+            </div>
+
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="action_report_sale_contract" model="ir.actions.report">
+    <field name="name">Hợp đồng bán hàng</field>
+    <field name="model">sale.order</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">frm_sugar_sales.report_sale_contract</field>
+    <field name="report_file">frm_sugar_sales.report_sale_contract</field>
+    <field name="binding_model_id" ref="sale.model_sale_order"/>
+    <field name="binding_type">report</field>
+  </record>
+
+  <template id="report_sale_contract">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="web.external_layout">
+          <div class="page" style="font-size:12px;">
+
+            <div class="text-center">
+              <p style="margin:0;font-weight:bold;">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
+              <p style="margin:0;">Độc lập – Tự do – Hạnh phúc</p>
+              <p style="margin:0;">———oOo———</p>
+              <h3 style="margin-top:14px;font-weight:bold;">HỢP ĐỒNG MUA BÁN HÀNG HÓA</h3>
+              <p style="margin:0;">Số: <span t-field="o.name"/>
+                <t t-if="o.date_order"> · Ngày <span t-out="o.date_order.strftime('%d/%m/%Y')"/></t>
+                <t t-if="o.client_order_ref"> · Tham chiếu: <span t-field="o.client_order_ref"/></t>
+              </p>
+            </div>
+
+            <p class="mt-3" style="margin-bottom:2px;"><b>BÊN A (Bên bán):</b> <span t-out="o.company_id.name"/></p>
+            <p style="margin:0 0 0 14px;">
+              <t t-if="o.company_id.street">Địa chỉ: <span t-out="o.company_id.street"/><t t-if="o.company_id.city">, <span t-out="o.company_id.city"/></t><br/></t>
+              <t t-if="o.company_id.vat">Mã số thuế: <span t-out="o.company_id.vat"/> · </t>
+              <t t-if="o.company_id.phone">Điện thoại: <span t-out="o.company_id.phone"/></t>
+            </p>
+
+            <p class="mt-2" style="margin-bottom:2px;"><b>BÊN B (Bên mua):</b> <span t-field="o.partner_id.name"/></p>
+            <p style="margin:0 0 0 14px;">
+              <t t-if="o.partner_id.street">Địa chỉ: <span t-out="o.partner_id.street"/><t t-if="o.partner_id.city">, <span t-out="o.partner_id.city"/></t><br/></t>
+              <t t-if="o.partner_id.vat">Mã số thuế: <span t-out="o.partner_id.vat"/> · </t>
+              <t t-if="o.partner_id.phone">Điện thoại: <span t-out="o.partner_id.phone"/></t>
+            </p>
+
+            <p class="mt-2">Hai bên thống nhất ký hợp đồng mua bán hàng hóa với các điều khoản sau:</p>
+
+            <p class="mt-2 mb-1"><b>Điều 1. Hàng hóa, số lượng &amp; giá trị</b></p>
+            <table class="table table-sm table-bordered" style="font-size:12px;">
+              <thead>
+                <tr>
+                  <th class="text-center">STT</th><th>Hàng hóa</th>
+                  <th class="text-end">Số lượng</th><th class="text-center">ĐVT</th>
+                  <th class="text-end">Đơn giá (đ)</th><th class="text-end">Thành tiền (đ)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr t-foreach="o.order_line.filtered(lambda l: not l.display_type)" t-as="l">
+                  <td class="text-center"><span t-out="l_index + 1"/></td>
+                  <td><span t-field="l.product_id"/></td>
+                  <td class="text-end"><span t-out="'{:,.0f}'.format(l.product_uom_qty).replace(',','.')"/></td>
+                  <td class="text-center"><span t-field="l.product_uom_id"/></td>
+                  <td class="text-end"><span t-out="'{:,.0f}'.format(l.price_unit).replace(',','.')"/></td>
+                  <td class="text-end"><span t-out="'{:,.0f}'.format(l.price_subtotal).replace(',','.')"/></td>
+                </tr>
+                <tr style="font-weight:bold;">
+                  <td colspan="5" class="text-end">Cộng tiền hàng (chưa thuế)</td>
+                  <td class="text-end"><span t-out="'{:,.0f}'.format(o.amount_untaxed).replace(',','.')"/></td>
+                </tr>
+                <tr>
+                  <td colspan="5" class="text-end">Thuế GTGT</td>
+                  <td class="text-end"><span t-out="'{:,.0f}'.format(o.amount_tax).replace(',','.')"/></td>
+                </tr>
+                <tr style="font-weight:bold;">
+                  <td colspan="5" class="text-end">TỔNG GIÁ TRỊ HỢP ĐỒNG</td>
+                  <td class="text-end"><span t-out="'{:,.0f}'.format(o.amount_total).replace(',','.')"/></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="mt-2 mb-1"><b>Điều 2. Tiến độ giao hàng</b></p>
+            <t t-if="o.delivery_schedule_line_ids">
+              <p style="margin:0 0 4px;">Bên A giao hàng cho Bên B theo các đợt sau (giao nhiều lần theo lịch, không giao một lần):</p>
+              <table class="table table-sm table-bordered" style="font-size:12px;">
+                <thead>
+                  <tr>
+                    <th class="text-center">Đợt</th><th class="text-center">Ngày giao dự kiến</th>
+                    <th>Hàng hóa</th><th class="text-end">Số lượng</th><th class="text-center">ĐVT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr t-foreach="o.delivery_schedule_line_ids" t-as="d">
+                    <td class="text-center"><span t-out="d_index + 1"/></td>
+                    <td class="text-center"><span t-out="d.planned_date and d.planned_date.strftime('%d/%m/%Y')"/></td>
+                    <td><span t-field="d.product_id"/></td>
+                    <td class="text-end"><span t-out="'{:,.0f}'.format(d.planned_qty).replace(',','.')"/></td>
+                    <td class="text-center"><span t-field="d.product_uom_id"/></td>
+                  </tr>
+                  <tr style="font-weight:bold;">
+                    <td colspan="3" class="text-end">Tổng khối lượng theo kế hoạch</td>
+                    <td class="text-end"><span t-out="'{:,.0f}'.format(o.scheduled_qty).replace(',','.')"/></td>
+                    <td/>
+                  </tr>
+                </tbody>
+              </table>
+              <p style="margin:0;font-style:italic;">Mỗi đợt giao Bên A lập Phiếu giao hàng, hai bên ký xác nhận khối lượng thực giao.</p>
+            </t>
+            <p t-else="">Hai bên thống nhất lịch giao cụ thể bằng phụ lục/thông báo giao hàng.</p>
+
+            <p class="mt-2 mb-1"><b>Điều 3. Thanh toán</b></p>
+            <p style="margin:0;">
+              Đồng tiền thanh toán: đồng Việt Nam (VNĐ).
+              <t t-if="o.payment_term_id"> Điều kiện: <span t-field="o.payment_term_id.name"/>.</t>
+              Thanh toán theo khối lượng thực giao từng đợt (đối chiếu Phiếu giao hàng đã ký).
+            </p>
+
+            <p class="mt-2 mb-1"><b>Điều 4. Điều khoản chung</b></p>
+            <p style="margin:0;">Chất lượng, quy cách đóng gói theo tiêu chuẩn công bố của Bên A. Hai bên
+              cam kết thực hiện đúng hợp đồng; phát sinh giải quyết trên tinh thần hợp tác, nếu không
+              thống nhất sẽ đưa ra Tòa án có thẩm quyền. Hợp đồng lập thành 02 bản, mỗi bên giữ 01 bản
+              có giá trị pháp lý như nhau.</p>
+
+            <div class="row" style="margin-top:36px;">
+              <div class="col-6 text-center"><b>ĐẠI DIỆN BÊN A</b><br/><i>(Ký, ghi rõ họ tên, đóng dấu)</i></div>
+              <div class="col-6 text-center"><b>ĐẠI DIỆN BÊN B</b><br/><i>(Ký, ghi rõ họ tên, đóng dấu)</i></div>
+            </div>
+
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

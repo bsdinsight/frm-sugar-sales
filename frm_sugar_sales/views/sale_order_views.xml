@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_order_form_sugar_sales" model="ir.ui.view">
+    <field name="name">sale.order.form.sugar.sales</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+
+      <xpath expr="//div[@name='button_box']" position="inside">
+        <button class="oe_stat_button" type="object" name="action_view_delivery_pickings"
+                icon="fa-truck" invisible="delivery_schedule_count == 0">
+          <field name="delivery_progress_pct" widget="statinfo" string="% giao theo KH"/>
+        </button>
+      </xpath>
+
+      <xpath expr="//notebook" position="inside">
+        <page string="Kế hoạch giao hàng" name="delivery_schedule">
+          <button name="action_generate_all_deliveries" type="object"
+                  string="Tạo tất cả phiếu giao" class="btn-primary" icon="fa-truck"
+                  invisible="not delivery_schedule_line_ids" style="margin-bottom:8px"/>
+          <field name="delivery_schedule_line_ids">
+            <list editable="bottom"
+                  decoration-success="delivery_state == 'done'"
+                  decoration-warning="delivery_state == 'partial'"
+                  decoration-muted="delivery_state == 'pending'">
+              <field name="sequence" widget="handle"/>
+              <field name="product_id"/>
+              <field name="planned_qty"/>
+              <field name="product_uom_id" optional="show"/>
+              <field name="planned_date"/>
+              <field name="note" optional="hide"/>
+              <field name="qty_delivered" readonly="1"/>
+              <field name="delivery_state" widget="badge" readonly="1"
+                     decoration-success="delivery_state == 'done'"
+                     decoration-warning="delivery_state == 'partial'"
+                     decoration-info="delivery_state == 'scheduled'"/>
+              <field name="picking_id" readonly="1" optional="hide"/>
+              <field name="picking_state" readonly="1" optional="hide"/>
+              <button name="action_generate_delivery" type="object" string="Tạo phiếu giao"
+                      icon="fa-truck" invisible="picking_id" class="btn-link"/>
+              <button name="action_open_picking" type="object" string="Mở phiếu"
+                      icon="fa-external-link" invisible="not picking_id" class="btn-link"/>
+            </list>
+          </field>
+          <group class="oe_subtotal_footer">
+            <field name="scheduled_qty" readonly="1"/>
+            <field name="delivered_qty" readonly="1"/>
+            <field name="delivery_progress_pct" widget="progressbar" readonly="1"/>
+          </group>
+        </page>
+      </xpath>
+
+    </field>
+  </record>
+
+</odoo>
