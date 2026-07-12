@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Agrione - Nông nghiệp cây mía',
-    'version': '19.0.2.1.0',
+    'version': '19.0.2.2.0',
     'summary': 'Nông nghiệp cây mía Agrione — module miễn phí lập kế hoạch giao mía '
                'nguyên liệu về nhà máy nhiều đợt trong vụ (nền Sale + Stock). Thuộc hệ '
                'sinh thái ERP mía: mua hàng, kho (vật tư nông nghiệp / vật liệu sản xuất '
